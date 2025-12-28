@@ -346,37 +346,47 @@ the def after placement
 <img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/81e5f92d-b536-4e62-bb4b-028db661f3da" />
 our custom invertor being used 
 
+# code
+expand
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/af18b8df-df76-47b5-815c-49866201484c" />
+we can clearly see the abutment
 
 
+# 9. Do Post-Synthesis timing analysis with OpenSTA tool.
+# code
+(after having preped the design)  
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
+set ::env(SYNTH_SIZING) 1
+run_synthesis
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/0b1669e6-3a35-4fea-8068-48e308dea0ac" />
+successful synthesis
 
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/46929118-5274-4f13-b362-006b4cee6a9e" />
+newly created pre_sta.conf
 
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/773e0060-2150-42e5-a389-69e72577f5ef" />
+newly created my_base.sdc in src folder in picorv32a directory
 
+Now we will run STA in another terminal
+# code
+sta pre_sta.conf
 
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/87fb033c-212e-4b75-a7ac-332446583ebb" />
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/4cf3d4e8-31a7-4d9a-bb8f-d8ae7f3b0517" />
 
+Now we will make changes to the fanout and rerun sta and synthesis
+# code
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]  
+add_lefs -src $lefs  
+set ::env(SYNTH_SIZING) 1  
+set ::env(SYNTH_MAX_FANOUT) 4  
+echo $::env(SYNTH_DRIVING_CELL)  
+run_synthesis  
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/ed45720e-ffa1-4f5f-b5e6-891574102f3f" />
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+sta pre_sta.conf
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/5f16d721-7529-471b-98d1-b4f5470eef97" />
 
 till now we have done all the steps before the sta analysis and now we will repleae the cells with those of higher drive strength so that we can reduce the deley
 <img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/8f7cbb00-4b3f-4857-8625-3c56bcd5628b" />
@@ -499,6 +509,9 @@ setup time margin improved with the use of larger buffers
 
 <img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/ac71d322-6a53-42e7-aef7-1fee43904813" />
 here we are reinserting the buffer1 in the buffer list
+
+# Section 5 - Final steps for RTL2GDS using tritonRoute and openSTA 
+
 now we will run gen_pdn command to generate power distribution network
 
 <img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/4991333b-3e41-4a4f-837f-39809ee6e860" />
