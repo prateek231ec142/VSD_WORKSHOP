@@ -136,8 +136,37 @@ the created spice file
 <img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/ad6dd1fb-30c5-487e-8352-733adcf0014e" />
 unit distance of layout is 0.01
 
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/5d3214c1-2cce-4a6c-950d-f8155c03bcab" />
+edited spice file, that was extracted from magic, ready to be simulated in ngspice
 
+# 5. Post-layout ngspice simulations.
+# code
+ngspice sky130_inv.spice
+plot y vs time a
 
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/aa57635c-669f-44dc-b8d6-7d90bb020142" />
+running the ngspice tool for our spice file
+
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/4608e9be-3115-412e-aa29-bf502cf0ede8" />
+generated plot
+
+Rise transition time calculation
+rise transition time = time taken for output to rise to 80 % − time taken for output to rise to 20 %  
+ 20 % of output = 660m V
+ 80 % of output = 2.64V 
+
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/3c24828a-abaf-4fca-807f-65476f4f2dd3" />
+this shows the 20% output timestamp
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/95851421-069a-43f6-90ed-28a7dda75eb7" />
+this image shows the 80% output timestamp
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/8a856dfc-3db7-4416-aafb-debcdacf8ce6" />
+this is the terminal showing exactly the 2 points
+rise time = 2.2457 - 2.1821 = 0.0636 ns
+
+Fall transition time calculation
+fall transitoon time = time taken for putput to fall to 20 % − time taken for output to fall to 80 %
+20 % of output = 660   m V
+80 % of output = 2.64   V 
 
 
 
