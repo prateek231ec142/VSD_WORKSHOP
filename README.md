@@ -525,10 +525,32 @@ now we will start running the routing at the default configuration to save time
 
 routing was finished with no DRC violations
 
+we can see the PDN def in magic
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/58a6a1ec-4dec-4baa-9858-7d78daf8584b" />
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/6cc68f2d-1df1-41ab-b6e4-bcfaaded1b64" />
+
+
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/85ec57d3-9469-465c-b753-3dec6b6c31bb" />
+the photo of the fast routing guide
+
+these are the images post routing
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/95f8e740-8ad4-47aa-a120-41cb0144c9ee" />
+
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/fe01bc28-5aaf-4066-9da1-7d54c00d8304" />
+
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/edae1dd6-d364-4eb9-9ba7-4d53b78502e6" />
+
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/7f5df47f-d8f9-4b09-b30c-d3a5acb0716e" />
 
 
 
+# Post-Route OpenSTA timing analysis with the extracted parasitics of the route.
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/648fa9d2-8abc-4045-b1e9-e5fcba5d0608" />
 
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/69f1e3cf-6eb7-4cbd-ac45-f0f1c1048917" />
+
+
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/c17dc96c-7ba0-43f1-9a43-2c090ee62457" />
 
 
 
