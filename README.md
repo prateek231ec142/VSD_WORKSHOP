@@ -1,7 +1,179 @@
 # VSD_WORKSHOP
 this repo is tracking the progress made in the VSD certification workshop for OpenLane flow
 
-lecture 65 onwards, till now we have done all the steps before the sta analysis and now we will repleae the cells with those of higher drive strength so that we can reduce the deley
+# Section 1 - Inception of open-source EDA, OpenLANE and Sky130 PDK 
+1. Run 'picorv32a' design synthesis using OpenLANE flow and generate necessary outputs.
+Commands to invoke the OpenLANE flow and perform synthesis
+# code
+cd Desktop/work/tools/openlane_working_dir/openlane
+docker
+./flow.tcl -interactive
+package require openlane 0.9
+prep -design picorv32a ( i have tapped in a previous design as runs was broken )
+                       (we can use -tap argument to return to any past run, instead of creating a new one)
+run_synthesis
+
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/163999aa-5eff-4b05-bfdb-f9cc80d82e4c" />
+Running synthesis
+# code
+run_synthesis
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/b755ddbb-1c20-4310-832d-f761440c4cf5" />
+synthesis was runn successfully
+
+Calculating the Flop Ratio
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/c528c002-c9b0-4ba4-9b2b-5bbfc017b249" />
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/76ec1c1d-96f8-406f-a298-58a0b2dfd840" />
+Calculation of Flop Ratio and DFF % from synthesis statistics report file
+Flop Ratio = 1613 / 14876 = 0.108429685
+Percentage of DFF's = 0.108429685 ∗ 100 = 10.84296854   % 
+
+# Section 2 - Good floorplan vs bad floorplan and introduction to library cells 
+# 1.Running the floorplan
+# code
+run_floorplan
+
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/441e4a46-3a9c-461b-8d7d-d780a51a0dce" />
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/efe86861-9c34-4ccf-a51d-2a41646b1c76" />
+due to issues with run_floorplan, we will split it into 3 commands
+# code
+init_floorplan
+place_io
+tap_decap_or
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/344b017d-81be-49e8-ad9a-4d2ce45efa2e" />
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/70fb841e-0032-4b6b-9bad-f1a88b7aa128" />
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/74fd47ef-470f-40a5-80f6-78204f390828" />
+
+now we have finished with the floorplan
+# 2. Calculate the die area in microns from the values in floorplan def.
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/c572f6c7-0d30-41ad-848e-61932f556365" />
+this is the image of the floorplan def file
+According to floorplan def
+
+Unit Distance: 1 µm
+Die Dimensions (in unit distance):
+Width = 660,685 − 0 = 660,685
+Height = 671,405 − 0 = 671,405
+Convert to microns (using 1 unit = 1,000 µm):
+Die Width = 660,685 ÷ 1,000 = 660.685 µm
+Die Height = 671,405 ÷ 1,000 = 671.405 µm
+Die Area (µm²):
+Area=660.685×671.405=443,587.212425 µm²
+Summary: The die measures 660.685 µm × 671.405 µm, with a total area of 443,587.21 µm².
+
+# 3. Load generated floorplan def in magic tool and explore the floorplan.
+# code
+cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/27-12_08-1/results/floorplan/
+magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.floorplan.def &
+
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/da06bd3a-72d3-4333-aa48-2b9885fb2835" />
+image of the floorplan uploaded in magic tool
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/2a189d6a-3441-4cee-926c-b1ad369ef9df" />
+showing the equidistant placement of the ports
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/b8270e29-e624-4389-a5ec-a3126fbb39e5" />
+decap and tap cells, note the tap cells are placed diagnoally equidistant from each other
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/13477920-96d4-4b60-8603-f05df20190da" />
+image showing the unplaced standard cells
+
+# 4. Run 'picorv32a' design congestion aware placement using OpenLANE flow and generate necessary outputs.
+# code
+run_placement
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/52380bfe-a4b5-4e7c-9b68-d197068c0357" />
+running the placement
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/e2742e7e-9cf9-4746-8853-acfc57629e7a" />
+placement has completed
+
+# 5. Load generated placement def in magic tool and explore the placement.
+# code
+cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/27-12_08-1/results/placement/
+magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def &
+
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/2a113872-2226-4130-8cef-5fef75ad1e01" />
+the cell after placement, as seen in magic tool
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/b406719d-3a12-48e3-829f-776fcfcc3854" />
+all standard cells are legally placed
+
+# Section 3 - Design library cell using Magic Layout and ngspice characterization
+# 1. Clone custom inverter standard cell design from github repository
+# code
+cd Desktop/work/tools/openlane_working_dir/openlane
+git clone https://github.com/nickson-jose/vsdstdcelldesign
+cd vsdstdcelldesign
+cp /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech .
+magic -T sky130A.tech sky130_inv.mag &
+
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/ca7eb1cb-255b-4c3d-8f26-e2f34a6ec84c" />
+here we are able to see the cloned design, and are openign it in magic 
+(the git clone command has not been run as this step was done before hand)
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/41bad2d2-277f-49f7-9c80-1fd80e3c76f3" />
+the invertor design as seen in the magic tool
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/069cb3bb-795f-45f1-ba99-af45c1e5a7ec" />
+the nmos and pmos are clearly identified with the code 
+# code
+select area //( after selecting the design )
+what
+
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/fac02612-8714-4ec1-8524-69a6bc255ca8" />
+Y connected to drain of both the mosfets
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/80c7b9ba-4639-4b9d-a665-5292b4efadd4" />
+PMOS source is conencted to vdd or Vpwr
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/83691aed-8e1b-4917-8b55-da81b6c250c8" />
+NMOS source conencted to ground here VGND
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/3dbcc476-a527-416e-a887-ba112be88a0d" />
+DRC error clearly visible on deleting a section of the poly for gate terminal
+ # 3. Spice extraction of inverter in magic.
+ # code
+ extract all
+ ext2spice cthresh 0 rthresh 0 //this is done to tolerate no RC, ie include all the parasitics
+ ext2spice
+
+ <img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/d83cb6a7-275a-43ca-adfa-e25e5b31b57f" />
+the model is extracted to spice file
+
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/2313dce6-6a8c-4f38-b9b1-aa26a2a211c6" />
+the created spice file 
+
+# 4. Editing the spice model file for analysis through simulation.
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/ad6dd1fb-30c5-487e-8352-733adcf0014e" />
+unit distance of layout is 0.01
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+till now we have done all the steps before the sta analysis and now we will repleae the cells with those of higher drive strength so that we can reduce the deley
 <img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/8f7cbb00-4b3f-4857-8625-3c56bcd5628b" />
 
 the or gate that we are going to replace with higher drive strength one as it has 4 as fanout but less drive strength
