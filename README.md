@@ -168,14 +168,119 @@ fall transitoon time = time taken for putput to fall to 20 % − time taken for 
 20 % of output = 660   m V
 80 % of output = 2.64   V 
 
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/3b5d0f79-afb4-48f0-b900-d6a11a60b6ca" />
+this is the 20% fall image
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/883bea28-a4df-4461-aedc-8d2572750656" />
+this is the image with 80% fall 
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/5a15fd6a-b317-4b36-b143-33fa6fc5a695" />
+this is the terminal image showing botht the points 
+fall time = 4.09547 - 4.05173 = 0.04374 ns
 
 
+Rise Cell Delay Calculation
+rise cell delay  = time taken for output to rise to 50 % − time taken for input to fall to 50 %
+50 % of 3.3V = 1.65V 
 
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/f0d666c3-b347-448e-a60c-0d382f6e3bc3" />
+this is the rise cell image
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/776d8b88-0747-47f5-8efc-265f6c778cd0" />
+image of terminal showing both points
+rise cell delay = 2.21094 - 2.15019 = 0.06075 ns
 
+Fall Cell Delay Calculation
+fall cell delay time = time taken for output to fall to 50 % − time taken for input to rise to 50 %
+50 % of 3.3 V = 1.65V 
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/cadde4b6-57ba-41d8-abfc-57fb0216490a" />
+the graph of 50%
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/4a6e0930-9d24-417a-ae9e-9d628ab152ce" />
+terminal showing both the points
+fall cell delay = 4.0777 - 4.04997 = 0.02773ns
 
+# 6. Find problem in the DRC section of the old magic tech file for the skywater process and fix them.
 
+# code
+cd //( as this will be done in home directory )
+wget http://opencircuitdesign.com/open_pdks/archive/drc_tests.tgz
+tar xfz drc_tests.tgz
+cd drc_tests
+ls -al
+magic -d XR &
+vim .magicrc
 
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/5386310a-173b-499a-a095-b9065ab431c6" />
+showing all the commands run
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/fd87ee3d-1c20-4afe-8e90-8d64f9adfb63" />
+the .magicrc file
 
+# Incorrectly implemented poly.9 simple rule correction
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/fd9a7f90-48ce-4151-9551-09f894281b75" />
+the incorrectly implemented rule
+
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/b64191a1-fb8a-4dd9-8761-6bae1594b5d4" />
+clearly the poly spacing rule has been violated but not highlighted
+
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/012a3577-d758-461a-8c06-745ca9b3f3c5" />
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/819a4b63-52f2-433e-a4e3-6a6d2dfab9ff" />
+updates being made in the sky130.tech file
+now we will update the tech file in the tckon window
+# code
+tech load sky130A.tech
+drc check
+drc why //this after selecting the drc error region
+
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/36488fb5-cc54-4cf2-ad36-ba36c92fce35" />
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/77a864e9-4403-4e3f-84e3-50392292fa1a" />
+this clearly shows the commands, and the DRC showing the expected error upon loading new tech file
+
+# Incorrectly implemented difftap.2 simple rule correction
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/8024f1e3-bf42-409a-90e4-908dd3811a0f" />
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/651b11da-f71a-4c04-ad3e-069e5509733b" />
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/13532560-1c39-4a9b-8712-2611f2e3fba8" />
+new additions to the tech file
+again repeat the above tech load process to see the new drc violations
+
+#############################################
+need to see
+#############################################
+
+# Incorrectly implemented nwell.4 complex rule correction
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/ad0ba11f-2021-4331-bcde-80490d97c20a" />
+these are the nwell rules
+# Incorrectly implemented nwell.4 rule no drc violation even though no tap present in nwell
+<img width="648" height="491" alt="image" src="https://github.com/user-attachments/assets/a9816465-255f-4a4a-a96a-86074ac0fe9a" />
+(this is an earlier screenshot of the wrong drc )
+New commands inserted in sky130A.tech file to update drc
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/5d70b413-d2e3-4ab9-b3cb-474af1514459" />
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/34508c9e-7518-4775-99c5-c9a2bbd4f914" />
+load the new tech file in the similar manner as above
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/02121fe4-bc3d-4bae-b5a5-b3049f1c1546" />
+clearly the DRC violation is visible now
+
+# Section 4 - Pre-layout timing analysis and importance of good clock tree 
+# 1. Fix up small DRC errors and verify the design is ready to be inserted into our flow.
+# code
+cd Desktop/work/tools/openlane_working_dir/openlane/vsdstdcelldesign
+magic -T sky130A.tech sky130_inv.mag &
+
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/b3984e32-7665-4518-b1a7-f06865bcf6d1" />
+this is the tracks.info file
+
+Commands for tkcon window to set grid as tracks of locali layer
+# code
+grid 0.46um 0.34um 0.23um 0.17um
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/2047eace-36f0-43fa-b8a2-4e1c6d68ca6e" />
+this shows the grid responding accordingly
+
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/cdbb110f-34c9-458b-a3fc-e54811d72ac6" />
+intersecton condition verified
+
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/c6b1e17d-5f64-4ec1-8d87-166f23d078e5" />
+clearly cell width = 1.38 = 3 * 0.46
+so width of cell is odd multiple of horizontal track pitch
+
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/32b0e9a3-2bb8-40fd-adc8-34a1f559748b" />
+clearly the height of the cell is 2.72um which is 8* 0.34
+thus height of standard cell is even multiple of height of track pitch
 
 
 
