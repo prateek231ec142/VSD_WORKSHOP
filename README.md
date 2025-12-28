@@ -282,6 +282,77 @@ so width of cell is odd multiple of horizontal track pitch
 clearly the height of the cell is 2.72um which is 8* 0.34
 thus height of standard cell is even multiple of height of track pitch
 
+# 2. Save the finalized layout with custom name and open it.
+# code
+save sky130_vsdinv.mag
+magic -T sky130A.tech sky130_vsdinv.mag &
+
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/d8482a57-1633-429d-bcb5-7232fd85d524" />
+clearly the newly named .mag file has been saved
+# 3. Generate lef from the layout.
+# code
+lef write
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/cfae1ff8-647e-487a-a9b8-8a7433c23dfe" />
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/2a8cb57b-72a1-49cc-aca5-12b7ad78d231" />
+the newly created lef file
+# 4. Copy the newly generated lef and associated required lib files to 'picorv32a' design 'src' directory.
+# code
+cp sky130_vsdinv.lef ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/  
+ls ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/  
+cp libs/sky130_fd_sc_hd__* ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/  
+ls ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/src/  
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/32e6a36e-f64f-4b42-8c3b-8b83893dfbea" />
+clearly all the files have been added
+
+# 5. Edit 'config.tcl' to change lib file and add the new extra lef into the openlane flow.
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/fdc15442-2055-4705-b25a-42a08060dc62" />
+the new commands have been added here
+
+# 6. Run openlane flow synthesis with newly inserted custom inverter cell.
+# code
+run_synthesis ( after starting docker for entering into openlane and perfoming prep code as in start)
+
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/5de4da75-8b05-4d88-9c06-9d590c4793ca" />
+Chip area for module '\picorv32a': 147712.918400  
+tns -709.98  
+wns -23.89  
+
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/a2d873ad-a31a-47e0-b677-38f374933cc5" />
+here we are updating the parameters and running synthesis again
+
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/b2ce9fd1-e024-42b4-ad5f-07363b830587" />
+clearly the custom invertor has been accepted
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/bc7f3396-5454-4ed2-95e0-4b5d904fea47" />
+Chip area for module '\picorv32a': 181730.544000  
+tns 0.00  
+wns 0.00  
+
+# 8. Once synthesis has accepted our custom inverter we can now run floorplan and placement and verify the cell is accepted in PnR flow.
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/40f92c1b-3cd0-4453-bb9c-50544dbdceb9" />
+running floorplan split into 3 commands as mentioned before
+ now we run placement 
+ # code
+ run_placement
+ <img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/99faa7c6-eee7-44ae-8f00-25156b55632d" />
+placement was successfuly run
+
+Now we will view the placement def in magic tool
+# code
+cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/28-12_16-44/results/placement/  
+magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def &
+
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/b894188f-dba7-4083-8778-301e0aab2515" />
+the def after placement
+<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/81e5f92d-b536-4e62-bb4b-028db661f3da" />
+our custom invertor being used 
+
+
+
+
+
+
+
+
 
 
 
