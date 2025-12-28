@@ -1,4 +1,4 @@
-<img width="1920" height="1075" alt="image" src="https://github.com/user-attachments/assets/a48a31c0-6bee-47c5-89f2-dc216e5703c2" /># VSD_WORKSHOP
+# VSD_WORKSHOP
 this repo is tracking the progress made in the VSD certification workshop for OpenLane flow
 
 lecture 65 onwards, till now we have done all the steps before the sta analysis and now we will repleae the cells with those of higher drive strength so that we can reduce the deley
